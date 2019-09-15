@@ -1,0 +1,7 @@
+*.jpg
+*.pdf
+.env3
+.vscode
+data
+*.pyc
+.DS_Store
