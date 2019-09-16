@@ -7,6 +7,8 @@ class Tesseract:
 
     def __init__(self, *args, **kwargs):
         pytesseract.pytesseract.tesseract_cmd = r'/usr/local/bin/tesseract'
+        self.horizontal_margin = 20
+        self.vertical_margin = 36
         super().__init__(*args, **kwargs)
 
     def join_paragraphs(self, translation_boxes, line_separation):
@@ -91,22 +93,59 @@ class Tesseract:
         return result
 
 
-    #a method to detect if two boxes are near enough. 
-    def areNearEnough(leftBox, rightBox):
-        return False
+    #a method to detect if two boxes are near enough horizontally. 
+    def are_near_enough_horizontally(self, first_box, second_box):
+        
+        vertical_difference = abs(int(first_box['top']) - int(second_box['top']))
+        if vertical_difference > self.vertical_margin:
+            return False
 
-    def updateTranslationBox(oldBox, newBox):
-        return oldBox
+        left_horizontal_end = int(first_box['left']) + int(first_box['width'])
+        
+        if ((int(left_horizontal_end) + self.horizontal_margin) > int(second_box['left'])):
+            return True
+        else:
+            return False
+
+    #a method to detect if two boxes are near enough vertically. 
+    def are_near_enough_vertically(self, first_box, second_box):
+
+        horizontal_difference = abs(int(first_box['left']) - int(second_box['left']))
+        if horizontal_difference > self.vertical_margin:
+            return False
+
+        first_vertical_end = int(first_box['top']) + int(first_box['height'])
+        
+        if ((int(first_vertical_end) + self.vertical_margin) > int(second_box['top'])):
+            return True
+        else:
+            return False
+
+    def update_translation_box_horizontally(self, first_box, second_box):
+        first_box['width'] = int(first_box['width']) + int(second_box['width'])
+        first_box['text'] = first_box['text'] + ' ' + second_box['text']
+
+    def update_translation_box_vertically(self, first_box, second_box):
+        first_box['height'] = int(first_box['height']) + int(second_box['height'])
+        first_box['text'] = first_box['text'] + '\n' + second_box['text']
 
     def get_translation_boxes(self, tesseract_boxes):
         translation_boxes = [tesseract_boxes[0].copy()]
         for tesseract_box in tesseract_boxes[1:]:
             joined = False
             for translation_box in translation_boxes:
-                if self.areNearEnough(tesseract_box, translation_box):
-                    self.updateTranslationBox(translation_box, tesseract_box)
+
+                
+                if self.are_near_enough_horizontally(translation_box ,tesseract_box):
+                    self.update_translation_box_horizontally(translation_box, tesseract_box)
                     joined = True
                     break
+
+                if self.are_near_enough_vertically(translation_box , tesseract_box):
+                    self.update_translation_box_vertically(translation_box, tesseract_box)
+                    joined = True
+                    break
+
             
             if joined is False:
                 translation_boxes.append(tesseract_box.copy())

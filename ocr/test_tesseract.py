@@ -103,4 +103,5 @@ class Test_Tesseract(unittest.TestCase):
                             {'conf': 92, 'left': '3192', 'top': '1947', 'width': '216', 'height': '46', 'text': 'Ventrue.'}]
         tess = Tesseract()
         translation_boxes = tess.get_translation_boxes(vampire_boxes)
+        print(translation_boxes)
         self.assertEqual(len(translation_boxes), 6)
