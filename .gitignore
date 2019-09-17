@@ -2,6 +2,8 @@
 *.pdf
 .env3
 .vscode
-data
+data/Guild
+data/image
+data/Vampire
 *.pyc
 .DS_Store

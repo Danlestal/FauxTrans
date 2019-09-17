@@ -5,11 +5,10 @@ import re
 
 class Tesseract:
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         pytesseract.pytesseract.tesseract_cmd = r'/usr/local/bin/tesseract'
         self.horizontal_margin = 20
         self.vertical_margin = 36
-        super().__init__(*args, **kwargs)
 
     def join_paragraphs(self, translation_boxes, line_separation):
         result = list()
