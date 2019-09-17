@@ -6,8 +6,7 @@ from unittest.mock import MagicMock
 class Test_TesseractParser(unittest.TestCase):
 
 	def test_get_tesseract_boxes(self):
-
-		file = open('/Users/eudvazquez/personal/FauxTrans/data/test/raw_data.txt',mode='r')
+		file = open('./data/test/raw_data.txt',mode='r')
 		raw_tesseract = file.read()
 		file.close()
 
@@ -17,4 +16,3 @@ class Test_TesseractParser(unittest.TestCase):
 		result = tess.get_tesseract_boxes(mock_file)
 
 		self.assertEqual(len(result), 121)
-
