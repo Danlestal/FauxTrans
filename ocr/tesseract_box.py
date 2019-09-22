@@ -32,5 +32,8 @@ class TesseractBox:
         self.text = self.text + '\n'+ other_box.text
         self.height = new_height
 
+    def __str__(self):
+        return self.text
+
 
 

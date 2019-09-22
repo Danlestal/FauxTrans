@@ -5,6 +5,11 @@ from ocr.tesseract_box import TesseractBox
 
 class TesseractParser:
 
+    def print_tesseract_collectio(collection):
+        for box in collection:
+            print(box)
+            print("--")
+
     def __init__(self, minimum_confidence):
         self.minimum_confidence = minimum_confidence
         

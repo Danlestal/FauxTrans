@@ -1,35 +1,21 @@
-from googletrans import Translator
+import pytesseract
 from ocr.tesseract_parser import TesseractParser
+from ocr.tesseract_cluster import TesseractCluster
 from pdf.converter import Converter
-
+from PIL import Image
 
 
 converter = Converter()
 
 # converter.to_jpg('./data/Guild/Stat Cards/M3E_Gld_Arc_Augmented_CharlesHoffman.pdf','./data/image/Faux')
-
-
-raw_data = TesseractParser.raw_tesseract('./data/image/Faux/out-0.jpg')
-print(raw_data)
-
-# text_boxes = tess.get_tesseract_boxes('./data/image/out-0.jpg')
-# translation_boxes = tess.extract_translation_boxes(text_boxes)
-# translation_boxes = tess.join_paragraphs(translation_boxes, 36)
-# print(translation_boxes)
-
+# parser = TesseractParser(50)
+# raw_data = parser.get_tesseract_boxes('./data/image/Faux/out-1.jpg')
+# cluster = TesseractCluster(40, 40)
+# translation_boxes = cluster.cluster_boxes(raw_data)
+# for translation_box in translation_boxes:
+#     print(translation_box)
+#     print('--')
 
 
 
-# converter.to_jpg('./data/Vampire/Brujah.pdf','./data/image/Vampire')
-# text_boxes = tess.get_tesseract_boxes('./data/image/Vampire/out-0.jpg')
-# print(text_boxes)
-# translation_boxes = tess.extract_translation_boxes(text_boxes)
-# translation_boxes = tess.join_paragraphs(translation_boxes, 36)
-# print(translation_boxes)
-
-
-
-
-
-
-
+print(pytesseract.image_to_data(Image.open('./data/image/Faux/out-1.jpg')))
