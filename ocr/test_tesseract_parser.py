@@ -12,10 +12,10 @@ class Test_TesseractParser(unittest.TestCase):
 
 		tess = TesseractParser(45)
 		TesseractParser.raw_tesseract = MagicMock(return_value=raw_tesseract)
-		mock_file = 'lel'
-		result = tess.get_tesseract_boxes(mock_file)
 
-		self.assertEqual(len(result), 121)
+		result = tess.get_tesseract_boxes('lel')
+
+		self.assertEqual(len(result), 110)
 
 	def test_get_tesseract_boxes_Hoff(self):
 		file = open('./data/test/raw_data_Hoff.txt',mode='r')
@@ -26,6 +26,5 @@ class Test_TesseractParser(unittest.TestCase):
 		TesseractParser.raw_tesseract = MagicMock(return_value=raw_tesseract)
 		mock_file = 'lel'
 		result = tess.get_tesseract_boxes(mock_file)
-		TesseractParser.print_tesseract_collectio(result)
-		print(result)
-		self.assertEqual(len(result), 12)
+		# TesseractParser.print_tesseract_collectio(result)
+		self.assertEqual(len(result), 33)

@@ -3,6 +3,10 @@ import re
 from PIL import Image
 from ocr.tesseract_box import TesseractBox
 
+import re
+
+
+
 class TesseractParser:
 
     def print_tesseract_collectio(collection):
@@ -15,6 +19,9 @@ class TesseractParser:
         
     def raw_tesseract(path):
         return pytesseract.image_to_data(Image.open(path))
+
+
+
 
     def get_tesseract_boxes(self, path):
             tesseract_boxes = TesseractParser.raw_tesseract(path)
@@ -32,6 +39,11 @@ class TesseractParser:
 
                 if raw_text:
                     raw_text=raw_text.strip()
+                else:
+                    continue
+
+                if len(raw_text) == 1:
+                    continue
 
                 raw_confidence = int(float(split_line[10]))
                 if raw_text and (raw_confidence > self.minimum_confidence):

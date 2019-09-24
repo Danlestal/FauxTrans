@@ -1,3 +1,5 @@
+import math
+
 class TesseractBox:
 
     def __init__(self, confidence, left, top, width, height, text):
@@ -14,17 +16,28 @@ class TesseractBox:
         else:
             return  abs((other_box.left + other_box.width) - self.left)
 
-    def join_horizontally(self, other_box):
-        new_end = other_box.left + other_box.width
-        new_width = new_end - self.left
-        self.text = self.text + ' '+ other_box.text
-        self.width = new_width
-
     def vertical_distance(self, other_box):
         if other_box.top >= self.top:
             return  abs((self.top + self.height) - other_box.top)
         else:
             return  abs((other_box.top + other_box.height) - self.top)
+
+    def vertical_center(self):
+        return self.top + (self.height /2)
+
+    def horizontal_center(self):
+        return self.left + (self.width /2)
+        
+    def distance(self, other_box):
+        x_distance = math.pow( (self.horizontal_center() - other_box.horizontal_center()), 2)
+        y_distance = math.pow((self.vertical_center() - other_box.vertical_center()), 2)
+        return math.sqrt(x_distance + y_distance)
+ 
+    def join_horizontally(self, other_box):
+        new_end = other_box.left + other_box.width
+        new_width = new_end - self.left
+        self.text = self.text + ' '+ other_box.text
+        self.width = new_width
 
     def join_vertically(self, other_box):
         new_end = other_box.top + other_box.height
