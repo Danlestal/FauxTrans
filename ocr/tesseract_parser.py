@@ -3,10 +3,6 @@ import re
 from PIL import Image
 from ocr.tesseract_box import TesseractBox
 
-import re
-
-
-
 class TesseractParser:
 
     def print_tesseract_collectio(collection):
@@ -19,8 +15,6 @@ class TesseractParser:
         
     def raw_tesseract(path):
         return pytesseract.image_to_data(Image.open(path))
-
-
 
 
     def get_tesseract_boxes(self, path):
